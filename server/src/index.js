@@ -19,36 +19,6 @@ connectDB()
     })
     .catch(err => console.log('Database connection failed !!! ', err))
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*
 import express from "express";
 const app = express();
