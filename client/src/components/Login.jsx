@@ -21,9 +21,9 @@ const LogIn = () => {
         const loginDetails = isEmail
             ? { email: data.username, password: data.password }
             : data
-        const response = await dispatch(userLogin(loginDetails))
-        const user = await dispatch(getCurrentUser())
-        if (user && response?.payload) {
+        const res = await dispatch(userLogin(loginDetails))
+        const user = await dispatch(getCurrentUser(res?.payload?.accessToken))
+        if (user && res?.payload) {
             navigate('/')
         }
     }

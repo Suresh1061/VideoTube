@@ -10,7 +10,7 @@ const initialState = {
 
 export const createTweet = createAsyncThunk("createTweet", async (content) => {
     try {
-        const res = await axios.post("http://localhost:3000/api/v1/tweets", content);
+        const res = await axios.post(`${import.meta.env.VITE_SERVER}/tweets`, content);
         return res.data.data
     } catch (error) {
         message.error(errorHandler(error?.response?.data))
@@ -19,7 +19,7 @@ export const createTweet = createAsyncThunk("createTweet", async (content) => {
 
 export const getUserTweet = createAsyncThunk("userTweet", async (userId) => {
     try {
-        const res = await axios.get(`http://localhost:3000/api/v1/tweets/user/${userId}`);
+        const res = await axios.get(`${import.meta.env.VITE_SERVER}/tweets/user/${userId}`);
         return res.data.data
     } catch (error) {
         message.error(errorHandler(error?.response?.data))
@@ -28,7 +28,7 @@ export const getUserTweet = createAsyncThunk("userTweet", async (userId) => {
 
 export const updateTweet = createAsyncThunk("updateTweet", async ({ content, tweetId }) => {
     try {
-        const res = await axios.patch(`http://localhost:3000/api/v1/tweets/${tweetId}`, { content });
+        const res = await axios.patch(`${import.meta.env.VITE_SERVER}/tweets/${tweetId}`, { content });
         message.success(res.data?.message)
         return res.data.data
     } catch (error) {
@@ -38,7 +38,7 @@ export const updateTweet = createAsyncThunk("updateTweet", async ({ content, twe
 
 export const deleteTweet = createAsyncThunk("deleteTweet", async (tweetId) => {
     try {
-        const res = await axios.delete(`http://localhost:3000/api/v1/tweets/${tweetId}`);
+        const res = await axios.delete(`${import.meta.env.VITE_SERVER}/tweets/${tweetId}`);
         message.success(res.data?.message)
         return res.data.data
     } catch (error) {

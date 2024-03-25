@@ -33,11 +33,11 @@ import { asyncHandler } from "../utils/asyncHandler.js"
 // })
 
 export const verifyJWT = asyncHandler(async (req, _, next) => {
-    console.log("cookies start : ")
-    console.log(req.cookies)
-    console.log(req.cookies.accessToken)
-    console.log(req.cookies.refreshToken)
-    console.log("cookies end : ")
+    // console.log("cookies start : ")
+    // console.log(req.cookies)
+    // console.log(req.cookies.accessToken)
+    // console.log(req.cookies.refreshToken)
+    // console.log("cookies end : ")
     
     try {
         let token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ", "")
@@ -47,10 +47,10 @@ export const verifyJWT = asyncHandler(async (req, _, next) => {
         }
 
         const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
-        console.log(decodedToken);
+        // console.log(decodedToken);
 
         const user = await User.findById(decodedToken?._id).select("-password -refreshToken")
-        console.log(user)
+        // console.log(user)
 
         if (!user) {
             throw new ApiError(401, "invalid access token")

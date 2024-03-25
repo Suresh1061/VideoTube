@@ -10,7 +10,7 @@ const initialState = {
 
 export const createPlaylist = createAsyncThunk("createPlaylist", async (data) => {
     try {
-        const res = await axios.post(`http://localhost:3000/api/v1/playlists`, data);
+        const res = await axios.post(`${import.meta.env.VITE_SERVER}/playlists`, data);
         message.success(res.data.data)
         return res.data.data
     } catch (error) {
@@ -20,7 +20,7 @@ export const createPlaylist = createAsyncThunk("createPlaylist", async (data) =>
 
 export const updatePlaylist = createAsyncThunk("updatePlaylist", async (data) => {
     try {
-        const res = await axios.patch(`http://localhost:3000/api/v1/playlists/${data.playlistId}`, data);
+        const res = await axios.patch(`${import.meta.env.VITE_SERVER}/playlists/${data.playlistId}`, data);
         message.success(res.data.data)
         return res.data.data
     } catch (error) {
@@ -30,7 +30,7 @@ export const updatePlaylist = createAsyncThunk("updatePlaylist", async (data) =>
 
 export const deletePlaylist = createAsyncThunk("deletePlaylist", async (playlistId) => {
     try {
-        const res = await axios.delete(`http://localhost:3000/api/v1/playlists/${playlistId}`);
+        const res = await axios.delete(`${import.meta.env.VITE_SERVER}/playlists/${playlistId}`);
         message.success(res.data.data)
         return res.data.data
     } catch (error) {
@@ -40,7 +40,7 @@ export const deletePlaylist = createAsyncThunk("deletePlaylist", async (playlist
 
 export const addVideoToPlaylist = createAsyncThunk("addVideo", async ({ playlistId, videoId }) => {
     try {
-        const res = await axios.patch(`http://localhost:3000/api/v1/playlists/add/${playlistId}/${videoId}`);
+        const res = await axios.patch(`${import.meta.env.VITE_SERVER}/playlists/add/${playlistId}/${videoId}`);
         message.success(res.data.data)
         return res.data.data
     } catch (error) {
@@ -50,7 +50,7 @@ export const addVideoToPlaylist = createAsyncThunk("addVideo", async ({ playlist
 
 export const removeVideoFromPlaylist = createAsyncThunk("removeVideo", async ({ playlistId, videoId }) => {
     try {
-        const res = await axios.patch(`http://localhost:3000/api/v1/playlists/remove/${playlistId}/${videoId}`);
+        const res = await axios.patch(`${import.meta.env.VITE_SERVER}/playlists/remove/${playlistId}/${videoId}`);
         message.success(res.data.data)
         return res.data.data
     } catch (error) {
@@ -61,7 +61,7 @@ export const removeVideoFromPlaylist = createAsyncThunk("removeVideo", async ({ 
 export const findPlaylistByUserId = createAsyncThunk("findPlaylistByUserId", async (userId) => {
 
     try {
-        const res = await axios.get(`http://localhost:3000/api/v1/playlists/user/${userId}`);
+        const res = await axios.get(`${import.meta.env.VITE_SERVER}/playlists/user/${userId}`);
         // message.success(res.data.data)
         return res.data.data
     } catch (error) {
@@ -71,7 +71,7 @@ export const findPlaylistByUserId = createAsyncThunk("findPlaylistByUserId", asy
 
 export const findPlaylistByPlaylistId = createAsyncThunk("findPlaylistByPlaylistId", async (playlistId) => {
     try {
-        const res = await axios.get(`http://localhost:3000/api/v1/playlists/${playlistId}`);
+        const res = await axios.get(`${import.meta.env.VITE_SERVER}/playlists/${playlistId}`);
         message.success(res.data.data)
         return res.data.data
     } catch (error) {

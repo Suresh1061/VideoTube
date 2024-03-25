@@ -1,29 +1,13 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-// import  axiosInstance  from '../../helpers/axiosInst.js'
 import axios from "axios";
 import { message } from "antd";
 import { errorHandler } from "../../constants";
-
-
-// const initialState = {
-//     status: true,
-//     loading: false,
-//     userData: {
-//         "username": "suresh",
-//         "email": "suresh@gmail.com",
-//         "fullName": "Suresh Pal",
-//         "avatar": {
-//             "url": "http://res.cloudinary.com/dxcw44ypq/image/upload/v1706728061/og9cvx2zvpzxjjdozpgt.jpg",
-//             "public_id": "og9cvx2zvpzxjjdozpgt",
-//             "_id": "65ba9a7f4f9ce9004eb1decd"
-//         },
-//     }
-// }
 
 const initialState = {
     loading: false,
     status: false,
     userData: null,
+    token:null,
     history: [],
 }
 
@@ -40,7 +24,7 @@ export const createAccount = createAsyncThunk('register', async (data) => {
     }
 
     try {
-        const res = await axios.post('http://localhost:3000/api/v1/users/register', formData)
+        const res = await axios.post(`${import.meta.env.VITE_SERVER}/users/register`, formData)
         message.success("Registered successfully")
         return res.data
     } catch (error) {
@@ -52,8 +36,8 @@ export const createAccount = createAsyncThunk('register', async (data) => {
 
 export const userLogin = createAsyncThunk('login', async (data) => {
     try {
-        const res = await axios.post('http://localhost:3000/api/v1/users/login', data)
-        return res.data.data.user
+        const res = await axios.post(`${import.meta.env.VITE_SERVER}/users/login`, data)
+        return res.data.data
     } catch (error) {
         const extractedErrorMessage = errorHandler(error?.response?.data)
         message.error(extractedErrorMessage)
@@ -63,7 +47,7 @@ export const userLogin = createAsyncThunk('login', async (data) => {
 
 export const userLogout = createAsyncThunk('logout', async () => {
     try {
-        await axios.post('http://localhost:3000/api/v1/users/logout')
+        await axios.post(`${import.meta.env.VITE_SERVER}/users/logout`)
         message.success("Log out successfully")
     } catch (error) {
         message.error(errorHandler(error?.response?.data))
@@ -73,7 +57,7 @@ export const userLogout = createAsyncThunk('logout', async () => {
 
 export const refreshAccessToken = createAsyncThunk('refresh-token', async (data) => {
     try {
-        const res = await axios.post('http://localhost:3000/api/v1/users/refresh-token', data)
+        const res = await axios.post(`${import.meta.env.VITE_SERVER}/users/refresh-token`, data)
         return res.data;
     } catch (error) {
         message.error(errorHandler(error?.response?.data))
@@ -83,7 +67,7 @@ export const refreshAccessToken = createAsyncThunk('refresh-token', async (data)
 
 export const changePassword = createAsyncThunk('change-password', async (data) => {
     try {
-        const res = await axios.post('http://localhost:3000/api/v1/users/change-password', data)
+        const res = await axios.post(`${import.meta.env.VITE_SERVER}/users/change-password`, data)
         message.success("Password change successfully")
     } catch (error) {
         message.error(errorHandler(error?.response?.data))
@@ -91,14 +75,15 @@ export const changePassword = createAsyncThunk('change-password', async (data) =
     }
 })
 
-export const getCurrentUser = createAsyncThunk('getCurrentUser', async () => {
-    const res = await axios.get('http://localhost:3000/api/v1/users/current-user')
+export const getCurrentUser = createAsyncThunk('getCurrentUser', async (accessToken) => {
+    axios.defaults.headers.common['Authorization'] = accessToken;
+    const res = await axios.get(`https://youtube-clone-e1ow.onrender.com/api/v1/users/current-user`)
     return res.data.data
 })
 
 export const updateAccountDetails = createAsyncThunk('updateAccountDetails', async (data) => {
     try {
-        const res = await axios.patch('http://localhost:3000/api/v1/users/update-account', data)
+        const res = await axios.patch(`${import.meta.env.VITE_SERVER}/users/update-account`, data)
         message.success("Account details update successfully")
         return res.data.data
     } catch (error) {
@@ -109,8 +94,7 @@ export const updateAccountDetails = createAsyncThunk('updateAccountDetails', asy
 
 export const updateAvatar = createAsyncThunk('updateAvatar', async (avatar) => {
     try {
-        console.log(avatar)
-        const res = await axios.patch('http://localhost:3000/api/v1/users/avatar', avatar)
+        const res = await axios.patch(`${import.meta.env.VITE_SERVER}/users/avatar`, avatar)
         message.success("Avatar update successfully")
         return res.data.data
     } catch (error) {
@@ -121,7 +105,7 @@ export const updateAvatar = createAsyncThunk('updateAvatar', async (avatar) => {
 
 export const updateCoverImage = createAsyncThunk('updateCoverImage', async (coverImage) => {
     try {
-        const res = await axios.patch('http://localhost:3000/api/v1/users/cover-image', coverImage)
+        const res = await axios.patch(`${import.meta.env.VITE_SERVER}/users/cover-image`, coverImage)
         message.success("Cover Image update successfully")
         return res.data.data
     } catch (error) {
@@ -148,12 +132,14 @@ const authSlice = createSlice({
         builder.addCase(userLogin.fulfilled, (state, action) => {
             state.loading = false
             state.status = true
-            state.userData = action.payload
+            state.userData = action.payload.user
+            state.token = action.payload.accessToken
         })
         builder.addCase(userLogout.fulfilled, (state) => {
             state.loading = false
             state.status = false
             state.userData = null
+            state.token = null
         })
         builder.addCase(getCurrentUser.pending, (state) => {
             state.loading = true

@@ -12,7 +12,7 @@ const initialState = {
 
 export const toggleSubscription = createAsyncThunk("toggleSubscription", async (channelId) => {
     try {
-        const res = await axios.post(`http://localhost:3000/api/v1/subscription/c/${channelId}`);
+        const res = await axios.post(`${import.meta.env.VITE_SERVER}/subscription/c/${channelId}`);
         return res.data.data
     } catch (error) {
         message.error(errorHandler(error?.response?.data))
@@ -20,9 +20,9 @@ export const toggleSubscription = createAsyncThunk("toggleSubscription", async (
 })
 
 export const channelSubscribers = createAsyncThunk("channelSubscribers", async (channelId) => {
-    console.log(channelId)
+    // console.log(channelId)
     try {
-        const res = await axios.get(`http://localhost:3000/api/v1/subscription/c/${channelId}`);
+        const res = await axios.get(`${import.meta.env.VITE_SERVER}/subscription/c/${channelId}`);
         return res.data.data
     } catch (error) {
         message.error(errorHandler(error?.response?.data))
@@ -31,7 +31,7 @@ export const channelSubscribers = createAsyncThunk("channelSubscribers", async (
 
 export const getSubscribedChannel = createAsyncThunk("getSubscribedChannel", async (subscriberId) => {
     try {
-        const res = await axios.get(`http://localhost:3000/api/v1/subscription/u/${subscriberId}`);
+        const res = await axios.get(`${import.meta.env.VITE_SERVER}/subscription/u/${subscriberId}`);
         return res.data.data
     } catch (error) {
         message.error(errorHandler(error?.response?.data))

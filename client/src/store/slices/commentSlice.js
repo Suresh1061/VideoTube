@@ -14,7 +14,7 @@ const initialState = {
 export const createComment = createAsyncThunk("createComment", async ({ videoId, content }) => {
     try {
         // console.log(content, videoId)
-        const res = await axios.post(`http://localhost:3000/api/v1/comments/${videoId}`, { content });
+        const res = await axios.post(`${import.meta.env.VITE_SERVER}/comments/${videoId}`, { content });
         return res.data.data
     } catch (error) {
         message.error(errorHandler(error?.response?.data))
@@ -22,9 +22,8 @@ export const createComment = createAsyncThunk("createComment", async ({ videoId,
 })
 
 export const updateComment = createAsyncThunk("updateComment", async ({ content, commentId }) => {
-    console.log(content, commentId)
     try {
-        const res = await axios.patch(`http://localhost:3000/api/v1/comments/c/${commentId}`, { content });
+        const res = await axios.patch(`${import.meta.env.VITE_SERVER}/comments/c/${commentId}`, { content });
         message.success(res.data?.message)
         return res.data.data
     } catch (error) {
@@ -33,9 +32,9 @@ export const updateComment = createAsyncThunk("updateComment", async ({ content,
 })
 
 export const deleteComment = createAsyncThunk("deleteComment", async (commentId) => {
-    console.log(commentId)
+    // console.log(commentId)
     try {
-        const res = await axios.delete(`http://localhost:3000/api/v1/comments/c/${commentId}`);
+        const res = await axios.delete(`${import.meta.env.VITE_SERVER}/comments/c/${commentId}`);
         message.success(res.data?.message)
         return res.data.data
     } catch (error) {
@@ -46,7 +45,7 @@ export const deleteComment = createAsyncThunk("deleteComment", async (commentId)
 export const getAllVideoComments = createAsyncThunk("allVideoComments", async ({ page, limit, videoId }) => {
 
     try {
-        const url = new URL(`${BASE_URL}/comments/${videoId}`);
+        const url = new URL(`${import.meta.env.VITE_SERVER}/comments/${videoId}`);
         if (page) url.searchParams.set("page", page);
         if (limit) url.searchParams.set("limit", limit);
         // console.log(url)

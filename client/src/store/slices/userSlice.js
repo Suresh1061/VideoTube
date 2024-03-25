@@ -12,7 +12,7 @@ const initialState = {
 
 export const UserChannel = createAsyncThunk("getUserChannel", async (username) => {
     try {
-        const res = await axios.get(`http://localhost:3000/api/v1/users/c/${username}`)
+        const res = await axios.get(`${import.meta.env.VITE_SERVER}/users/c/${username}`)
         return res.data.data
     } catch (error) {
         message.error(errorHandler(error?.response?.data))
@@ -22,7 +22,7 @@ export const UserChannel = createAsyncThunk("getUserChannel", async (username) =
 
 export const getUserWatchHistory = createAsyncThunk("getUserWatchHistory", async () => {
     try {
-        const res = await axios.get(`http://localhost:3000/api/v1/users/watch-history`)
+        const res = await axios.get(`${import.meta.env.VITE_SERVER}/users/watch-history`)
         return res.data.data
     } catch (error) {
         message.error(errorHandler(error?.response?.data))

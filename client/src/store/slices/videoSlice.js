@@ -18,24 +18,24 @@ const initialState = {
 
 export const getAllVideos = createAsyncThunk(
     "getAllVideos", async ({ userId, query, sortBy, sortType, page, limit }) => {
-    try {
-        const url = new URL(`http://localhost:3000/api/v1/videos`)
+        try {
+            const url = new URL(`${import.meta.env.VITE_SERVER}/videos`)
 
-        if (userId) url.searchParams.set("userId", userId);
-        if (query) url.searchParams.set("query", query);
-        if (page) url.searchParams.set("page", page);
-        if (limit) url.searchParams.set("limit", limit);
-        if (sortBy && sortType) {
-            url.searchParams.set("sortBy", sortBy);
-            url.searchParams.set("sortType", sortType);
+            if (userId) url.searchParams.set("userId", userId);
+            if (query) url.searchParams.set("query", query);
+            if (page) url.searchParams.set("page", page);
+            if (limit) url.searchParams.set("limit", limit);
+            if (sortBy && sortType) {
+                url.searchParams.set("sortBy", sortBy);
+                url.searchParams.set("sortType", sortType);
+            }
+            const res = await axios.get(url)
+            return res.data.data
+        } catch (error) {
+            // message.error(errorHandler(error?.response?.data))
+            throw error
         }
-        const res = await axios.get(url)
-        return res.data.data
-    } catch (error) {
-        // message.error(errorHandler(error?.response?.data))
-        throw error
-    }
-})
+    })
 
 export const uploadVideo = createAsyncThunk("uploadVideo", async (data) => {
     const formData = new FormData()
@@ -46,7 +46,7 @@ export const uploadVideo = createAsyncThunk("uploadVideo", async (data) => {
 
     // console.log(formData)
     try {
-        const res = await axios.post('http://localhost:3000/api/v1/videos', formData)
+        const res = await axios.post(`${import.meta.env.VITE_SERVER}/videos`, formData)
         message.success(res.data?.message)
         // console.log(res.data.data)
         return res.data.data
@@ -55,9 +55,9 @@ export const uploadVideo = createAsyncThunk("uploadVideo", async (data) => {
     }
 })
 
-export const findVideo = createAsyncThunk("findVideo", async ({videoId}) => {
+export const findVideo = createAsyncThunk("findVideo", async ({ videoId }) => {
     try {
-        const res = await axios.get(`http://localhost:3000/api/v1/videos/${videoId}`)
+        const res = await axios.get(`${import.meta.env.VITE_SERVER}/videos/${videoId}`)
         return res.data.data
     } catch (error) {
         message.error(errorHandler(error?.response?.data))
@@ -76,7 +76,7 @@ export const updateVideoDetails = createAsyncThunk(
 
         try {
             const response = await axios.patch(
-                `http://localhost:3000/api/v1/videos/${videoId}`,
+                `${import.meta.env.VITE_SERVER}/videos/${videoId}`,
                 formData
             );
             return response.data.data;
@@ -89,7 +89,7 @@ export const updateVideoDetails = createAsyncThunk(
 
 export const deleteVideo = createAsyncThunk("deleteVideo", async (videoId) => {
     try {
-        const res = await axios.delete(`http://localhost:3000/api/v1/videos/${videoId}`)
+        const res = await axios.delete(`${import.meta.env.VITE_SERVER}/videos/${videoId}`)
         message.success(res.data?.message)
         return res.data.data;
     } catch (error) {
@@ -99,7 +99,7 @@ export const deleteVideo = createAsyncThunk("deleteVideo", async (videoId) => {
 
 export const toggleIsPublish = createAsyncThunk("toggleIsPublish", async (videoId) => {
     try {
-        const res = await axios.patch(`http://localhost:3000/api/v1/videos/toggle/publish/${videoId}`)
+        const res = await axios.patch(`${import.meta.env.VITE_SERVER}/videos/toggle/publish/${videoId}`)
         // message.success("successfully published")
         return res.data.data
     } catch (error) {

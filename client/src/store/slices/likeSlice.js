@@ -11,7 +11,7 @@ const initialState = {
 
 export const toggleVideoLike = createAsyncThunk("toggleVideoLike", async (videoId) => {
     try {
-        const res = await axios.post(`http://localhost:3000/api/v1/likes/toggle/v/${videoId}`);
+        const res = await axios.post(`${import.meta.env.VITE_SERVER}/likes/toggle/v/${videoId}`);
         return res.data.data
     } catch (error) {
         message.error(errorHandler(error?.response?.data))
@@ -20,8 +20,8 @@ export const toggleVideoLike = createAsyncThunk("toggleVideoLike", async (videoI
 
 export const toggleCommentLike = createAsyncThunk("toggleCommentLike", async (commentId) => {
     try {
-        console.log(commentId)
-        const res = await axios.post(`http://localhost:3000/api/v1/likes/toggle/c/${commentId}`);
+        // console.log(commentId)
+        const res = await axios.post(`${import.meta.env.VITE_SERVER}/likes/toggle/c/${commentId}`);
         return res.data.data
     } catch (error) {
         message.error(errorHandler(error?.response?.data))
@@ -30,7 +30,7 @@ export const toggleCommentLike = createAsyncThunk("toggleCommentLike", async (co
 
 export const toggleTweetLike = createAsyncThunk("toggleTweetLike", async (tweetId) => {
     try {
-        const res = await axios.post(`http://localhost:3000/api/v1/likes/toggle/t/${tweetId}`);
+        const res = await axios.post(`${import.meta.env.VITE_SERVER}/likes/toggle/t/${tweetId}`);
         return res.data.data
     } catch (error) {
         message.error(errorHandler(error?.response?.data))
@@ -39,7 +39,7 @@ export const toggleTweetLike = createAsyncThunk("toggleTweetLike", async (tweetI
 
 export const getLikedVideos = createAsyncThunk("getLikedVideos", async () => {
     try {
-        const res = await axios.get(`http://localhost:3000/api/v1/likes/videos`);
+        const res = await axios.get(`${import.meta.env.VITE_SERVER}/likes/videos`);
         return res.data.data
     } catch (error) {
         message.error(errorHandler(error?.response?.data))

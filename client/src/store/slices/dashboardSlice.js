@@ -12,7 +12,7 @@ const initialState = {
 
 export const getChannelStats = createAsyncThunk("channelStats", async () => {
     try {
-        const res = await axios.get(`http://localhost:3000/api/v1/dashboard/stats`);
+        const res = await axios.get(`${import.meta.env.VITE_SERVER}/dashboard/stats`);
         message.success(res.data.data)
         return res.data.data
     } catch (error) {
@@ -23,7 +23,7 @@ export const getChannelStats = createAsyncThunk("channelStats", async () => {
 
 export const getChannelVideos = createAsyncThunk("channelVideos", async () => {
     try {
-        const res = await axios.get(`http://localhost:3000/api/v1/dashboard/videos`);
+        const res = await axios.get(`${import.meta.env.VITE_SERVER}/dashboard/videos`);
         message.success(res.data.data)
         return res.data.data
     } catch (error) {

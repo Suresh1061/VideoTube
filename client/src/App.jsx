@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import axios from 'axios'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Routes, Route } from 'react-router-dom'
 import { getCurrentUser } from './store/slices/authSlice.js'
 import {
@@ -33,10 +33,23 @@ axios.defaults.withCredentials = true
 
 const App = () => {
   const dispatch = useDispatch()
+  const accessToken = useSelector((state) => state.auth?.token)
 
   useEffect(() => {
-    dispatch(getCurrentUser())
+    dispatch(getCurrentUser(accessToken))
   }, [dispatch])
+
+  // console.log(accessToken)
+  // const currUser = async () => {
+
+  //   const res = await axios.get("http://localhost:3000/api/v1/users/current-user")
+  //   // const res = await axios.get("http://localhost:3000/api/v1/users/current-user")
+  //   console.log(res)
+  // }
+
+  // useEffect(() => {
+  //   currUser()
+  // }, [])
 
   return (
     <>
