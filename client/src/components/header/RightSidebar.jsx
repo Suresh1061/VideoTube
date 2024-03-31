@@ -85,7 +85,12 @@ const RightSidebar = ({ profileImg, username, fullName, authStatus, setToggleRig
                     <div>
                         <p className=' text-lg'>{fullName}</p>
                         <p className=' text-slate-300 text-base'>@{username}</p>
-                        <Link className=' text-blue-500 text-sm'>View your channel</Link>
+                        <Link
+                            to={`/channel/${username}`}
+                            onClick={() => setToggleRightSidebar(false)}
+                            className=' text-blue-500 text-xs hover:underline'
+                        >View your channel
+                        </Link>
                     </div>
                 </div>
                 <div className=' flex flex-col px-2 py-3'>
@@ -106,14 +111,19 @@ const RightSidebar = ({ profileImg, username, fullName, authStatus, setToggleRig
 
             {/* For small devices */}
             <div className=' sm:hidden w-full h-full fixed top-0 left-0 bg-black bg-opacity-75 z-50'>
-                <div className='w-3/4 h-screen bg-[#212121] flex flex-col float-right rounded-s-xl'>
+                <div className='w-3/4 h-screen bg-[#212121] flex flex-col float-right'>
                     {authStatus ? (
                         <div className=' p-4 relative  flex gap-x-4 border-b border-gray-600 '>
                             <img src={profileImg} alt="user profile" className=' w-10 h-10 rounded-full border object-cover' />
                             <div>
                                 <p className=' text-base'>{fullName}</p>
                                 <p className=' text-slate-300 text-sm'>@{username}</p>
-                                <Link className=' text-blue-500 text-xs'>View your channel</Link>
+                                <Link
+                                    to={`/channel/${username}`}
+                                    className=' text-blue-500 text-xs hover:underline'
+                                    onClick={() => setToggleRightSidebar(false)}
+                                >View your channel
+                                </Link>
                             </div>
                             <div className=' absolute top-5 right-5 cursor-pointer'>
                                 <IoIosCloseCircleOutline size={30} onClick={() => setToggleRightSidebar((prev) => !prev)} />
@@ -130,22 +140,21 @@ const RightSidebar = ({ profileImg, username, fullName, authStatus, setToggleRig
 
                     <div className=' flex flex-col px-4 mt-3'>
                         <div className=' flex flex-col gap-y-2 '>
-                            {
-                                mobileItems.map(item => (
-                                    <div
-                                        className=' w-full  rounded-lg flex items-center gap-x-3 cursor-pointer py-2 px-4 border-b border-gray-600'
-                                        key={item.name}
-                                        onClick={() => {
-                                            if (item.url) {
-                                                navigate(item.url)
-                                                setToggleRightSidebar((prev) => !prev)
-                                            }
-                                        }}
-                                    >
-                                        {item.icon}
-                                        <p className=' text-sm'>{item.name}</p>
-                                    </div>
-                                ))
+                            {mobileItems.map(item => (
+                                <div
+                                    className=' w-full  rounded-lg flex items-center gap-x-3 cursor-pointer py-2 px-4 border-b border-gray-600'
+                                    key={item.name}
+                                    onClick={() => {
+                                        if (item.url) {
+                                            navigate(item.url)
+                                            setToggleRightSidebar((prev) => !prev)
+                                        }
+                                    }}
+                                >
+                                    {item.icon}
+                                    <p className=' text-sm'>{item.name}</p>
+                                </div>
+                            ))
                             }
                         </div>
                     </div>

@@ -19,7 +19,7 @@ function ChannelVideos() {
     }, [dispatch, useId, searchParams])
 
     if (videos.length == 0) {
-        return <NoVideosFound />
+        return <NoVideosFound className="pt-10 sm:h-full" />
     }
 
     const handleSort = (sortBy, sortType = 'asc') => {

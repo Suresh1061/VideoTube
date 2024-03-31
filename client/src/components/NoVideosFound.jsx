@@ -1,9 +1,12 @@
 import React from "react";
 import { FaPlayCircle } from "./icons";
 
-const NoVideosFound = ({ text }) => {
+const NoVideosFound = ({
+    text,
+    className = "h-screen"
+}) => {
     return (
-        <div className="flex flex-col pb-20 items-center justify-center text-white h-screen">
+        <div className={`w-full flex flex-col justify-center items-center ${className} `}>
             <FaPlayCircle
                 size={45}
                 className="text-purple-500"

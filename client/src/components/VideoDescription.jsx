@@ -80,7 +80,7 @@ function VideoDescription({
                             <div>
                                 <button
                                     onClick={handleSubscribe}
-                                    className={`transition-all px-4 py-2 bg-purple-600 font-semibold text-black rounded-full`}
+                                    className={`${!LocalIsSubscribed ? "bg-purple-600  text-black" : "bg-[#222222] text-gray-200"} transition-all px-4 py-2 font-semibold  rounded-full`}
                                 >
                                     {LocalIsSubscribed
                                         ? "Subscribed"
