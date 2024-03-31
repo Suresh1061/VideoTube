@@ -7,7 +7,7 @@ const initialState = {
     loading: false,
     status: false,
     userData: null,
-    token:null,
+    token: null,
     history: [],
 }
 
@@ -77,7 +77,7 @@ export const changePassword = createAsyncThunk('change-password', async (data) =
 
 export const getCurrentUser = createAsyncThunk('getCurrentUser', async (accessToken) => {
     axios.defaults.headers.common['Authorization'] = accessToken;
-    const res = await axios.get(`https://youtube-clone-e1ow.onrender.com/api/v1/users/current-user`)
+    const res = await axios.get(`${import.meta.env.VITE_SERVER}/users/current-user`)
     return res.data.data
 })
 
