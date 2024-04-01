@@ -142,7 +142,7 @@ const RightSidebar = ({ profileImg, username, fullName, authStatus, setToggleRig
                         <div className=' flex flex-col gap-y-2 '>
                             {mobileItems.map(item => (
                                 <div
-                                    className=' w-full  rounded-lg flex items-center gap-x-3 cursor-pointer py-2 px-4 border-b border-gray-600'
+                                    className=' w-full  rounded-lg flex items-center gap-x-5 cursor-pointer py-2 px-4 border-b border-gray-600'
                                     key={item.name}
                                     onClick={() => {
                                         if (item.url) {
@@ -152,13 +152,13 @@ const RightSidebar = ({ profileImg, username, fullName, authStatus, setToggleRig
                                     }}
                                 >
                                     {item.icon}
-                                    <p className=' text-sm'>{item.name}</p>
+                                    <p className=' text-base'>{item.name}</p>
                                 </div>
                             ))
                             }
                         </div>
                     </div>
-                    <div className=' flex justify-center mt-6'>
+                    <div className=' flex justify-center mt-10'>
                         {
                             !authStatus ? (
                                 <div className=' space-x-4'>
